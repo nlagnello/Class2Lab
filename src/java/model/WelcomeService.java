@@ -7,18 +7,18 @@ package model;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalTime;
 
 /**
  *
  * @author nagnello
  */
 public class WelcomeService {
-    private Date currentDate = new Date();
+    private int currentHrs = LocalTime.now().getHour();
     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
     
     private String getPartOfDay(){
-        int hour = currentDate.getHours();
+        int hour = currentHrs;
         String answer = "";
         if(hour >= 5 && hour < 12)
             answer = "Good morning";

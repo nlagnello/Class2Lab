@@ -3,21 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashSet;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.WelcomeService;
 
 /**
  *
  * @author nagnello
  */
-@WebServlet(name = "Greeter", urlPatterns = {"/Greeter"})
+@WebServlet(name = "Greeter", urlPatterns = {"/greeter"})
 public class Greeter extends HttpServlet {
 
     /**
@@ -31,11 +34,22 @@ public class Greeter extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            
-        }
+        //response.setContentType("text/html;charset=UTF-8");
+        
+        String name = request.getParameter("firstName");
+        
+        request.setAttribute("name", name);
+        
+        WelcomeService ws = new WelcomeService();
+        
+        String msg = ws.createMessage(name);
+        
+        request.setAttribute("message", msg);
+        
+        RequestDispatcher view = request.getRequestDispatcher("/welcomeMessage.jsp");
+        view.forward(request,response);
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
